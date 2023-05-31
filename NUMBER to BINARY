@@ -1,0 +1,36 @@
+Module Module1
+    Sub Main()
+        Dim continueTransaction As Boolean = True
+
+        While continueTransaction
+            ' Prompt the user to enter a decimal number
+            Console.Write("Enter a whole number: ")
+            Dim decimalNum As Integer = Integer.Parse(Console.ReadLine())
+
+            ' Convert the decimal number to binary with leading zeros
+            Dim binaryNum As String = Convert.ToString(decimalNum, 2).PadLeft(8, "0")
+
+            ' Display the binary representation of the decimal number
+            Console.WriteLine("Binary representation: " & binaryNum)
+
+            ' Prompt the user for another transaction
+            Console.Write("Do you want to perform another transaction? (Y/N): ")
+            Dim response As String = Console.ReadLine()
+
+            ' Determine whether to continue the loop based on user response
+            Select Case response.ToLower()
+                Case "y"
+                    ' Continue the loop
+                Case "n"
+                    ' Exit the loop
+                    continueTransaction = False
+                Case Else
+                    ' Invalid response - assume "N" and exit the loop
+                    Console.WriteLine("Invalid response. Exiting...")
+                    continueTransaction = False
+            End Select
+
+            Console.WriteLine() ' Add a blank line for readability
+        End While
+    End Sub
+End Module
