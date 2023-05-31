@@ -1,0 +1,69 @@
+Module MainModule
+    Sub Main()
+        Console.WriteLine("Binary to Gray Code Converter")
+        Console.WriteLine("-----------------------------")
+
+        Dim continueFlag As Boolean = True
+
+        While continueFlag
+            Dim binary As String = GetBinaryInput("Enter a binary number: ")
+
+            Dim grayCode As String = ConvertBinaryToGray(binary)
+
+            Console.WriteLine("Gray code: " & grayCode)
+            Console.WriteLine()
+
+            Console.WriteLine("Do you want to convert another binary number? (y/n)")
+            Dim response As String = Console.ReadLine()
+
+            If response.ToLower() <> "y" Then
+                continueFlag = False
+            End If
+
+            Console.WriteLine()
+        End While
+    End Sub
+
+    Function GetBinaryInput(ByVal prompt As String) As String
+        Dim binary As String
+        Dim validInput As Boolean = False
+
+        Do
+            Console.Write(prompt)
+            binary = Console.ReadLine().Trim()
+
+            ' Check if input is a valid binary number
+            validInput = True
+            For Each digit As Char In binary
+                If digit <> "0"c AndAlso digit <> "1"c Then
+                    validInput = False
+                    Exit For
+                End If
+            Next
+
+            If Not validInput Then
+                Console.WriteLine("Invalid binary number. Please try again.")
+            End If
+        Loop While Not validInput
+
+        Return binary
+    End Function
+
+    Function ConvertBinaryToGray(ByVal binary As String) As String
+        Dim grayCode As New System.Text.StringBuilder()
+
+        ' The first bit of the gray code is the same as the first bit of the binary code
+        grayCode.Append(binary(0))
+
+        ' Perform XOR operation on each pair of adjacent bits
+        For i As Integer = 1 To binary.Length - 1
+            Dim bit1 As Integer = Integer.Parse(binary(i - 1).ToString())
+            Dim bit2 As Integer = Integer.Parse(binary(i).ToString())
+
+            Dim grayBit As Integer = bit1 Xor bit2
+            grayCode.Append(grayBit)
+        Next
+
+        Return grayCode.ToString()
+    End Function
+End Module
