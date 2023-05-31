@@ -1,0 +1,41 @@
+Imports System.Text
+
+Module MainModule
+    Sub Main()
+        Dim continueFlag As Boolean = True
+
+        While continueFlag
+            Console.WriteLine("Enter a string:")
+            Dim input As String = Console.ReadLine()
+
+            Dim binaryString As String = ConvertToBinary(input)
+            Console.WriteLine(binaryString)
+            Console.WriteLine()
+
+            Console.WriteLine("Do you want to continue? (y/n)")
+            Dim response As String = Console.ReadLine()
+
+            If response.ToLower() <> "y" Then
+                continueFlag = False
+            End If
+        End While
+    End Sub
+
+    Function ConvertToBinary(ByVal text As String) As String
+        Dim binaryBuilder As New StringBuilder()
+
+        For Each c As Char In text
+            Dim binaryValue As String = ""
+
+            If c = " " Then
+                binaryValue = " "
+            Else
+                binaryValue = Convert.ToString(Asc(c), 2).PadLeft(8, "0"c)
+            End If
+
+            binaryBuilder.Append(binaryValue)
+        Next
+
+        Return binaryBuilder.ToString()
+    End Function
+End Module
